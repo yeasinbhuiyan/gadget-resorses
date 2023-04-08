@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { allClear, getStoredCart, removeFromDb } from '../Utilitis/fakeDb';
 import { Link, useLoaderData } from 'react-router-dom';
 import CartItem from './Cards/CartItem';
+import { CartContext } from '../App';
 
 const StoredCart = () => {
     
     
     const {cartArray} = useLoaderData()
-    const [cart,setCart] = useState(cartArray)
+    const [cart,setCart] = useContext(CartContext)
     const handleRemove=(id)=>{
 
         removeFromDb (id)
@@ -20,6 +21,7 @@ const StoredCart = () => {
 
       const deleteCartHandler=()=>{
         allClear()
+        setCart([])
       }
 
    let total = 0
