@@ -2,11 +2,22 @@ import React, { useContext, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { ShoppingCartIcon } from '@heroicons/react/24/solid'
 import { CartContext } from '../App'
+import { AuthContext } from '../Provider/AuthProvider'
 
 const Header = () => {
     const [cart, setCart] = useContext(CartContext)
     console.log(cart.length)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+
+
+  const {user,logOut} = useContext(AuthContext)
+
+  const LogOut=()=>{
+    logOut()
+    .then(()=>{})
+    .catch(()=>{})
+  }
   return (
     <div className='px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8'>
       <div className='relative flex items-center justify-between'>
@@ -69,6 +80,24 @@ const Header = () => {
               About Us
             </NavLink>
           </li>
+          {user ? <><span className='ms-3 me-3'>{user.email}</span> <button onClick={LogOut} className='btn btn-xs'>Logout</button></> :
+         
+         <li>
+         <NavLink
+           to='/login'
+           aria-label='login'
+           title='login'
+           className={({ isActive }) => (isActive ? 'active' : 'default')}
+         >
+           Login
+         </NavLink>
+       </li>
+
+          }
+
+
+
+
         </ul>
         <div className='lg:hidden'>
           <button
